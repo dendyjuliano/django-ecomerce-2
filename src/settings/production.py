@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = False
+DEBUG = config('DEBUG',cast=bool)
 ALLOWED_HOSTS = ['ip-address','www.website.com']
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -21,13 +21,13 @@ AUTH_PASSWORD_VALIDATORS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'your db_name',
-        'USER':'your db_username',
-        'PASSWORD':'your db_password',
-        'HOST': 'localhost',
+        'NAME': config('DB_NAME'),
+        'USER':config('DB_USER'),
+        'PASSWORD':config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
         'PORT':''
     }
 }
 
-STRIPE_PUBLIC_KEY = 'your public live key'
-STRIPE_SECRET_KEY = 'your secreat live key'
+STRIPE_PUBLIC_KEY = config('STRIPE_LIVE_PUBLIC_KEY')
+STRIPE_SECRET_KEY = config('STRIPE_LIVE_SECRET_KEY')
