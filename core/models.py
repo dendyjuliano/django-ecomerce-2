@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.utils.text import slugify
+from django.shortcuts import reverse
 
 # Create your models here.
 
@@ -17,7 +18,7 @@ class Product(models.Model):
     price = models.IntegerField()
     discount_price = models.IntegerField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    slug = models.SlugField(unique=True,blank=True,null=True)
+    slug = models.SlugField(unique=True, blank=True, null=True)
     description = models.TextField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
@@ -25,6 +26,22 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Product, self).save(*args, **kwargs)
+
+    def get_price(self, *args, **kwargs):
+        discount_price = self.discount_price
+        price = self.price
+
+        if(discount_price != None):
+            discount = price * discount_price/100
+            return price - discount
+        else:
+            return price
+
+    def get_absolute_url(self):
+        url = reverse("core:detail_product",kwargs={
+            'slug':self.slug
+        })
+        return url
 
     def __str__(self):
         return self.title

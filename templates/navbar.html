@@ -19,10 +19,13 @@
                     <!-- Top Right -->
                     <div class="right-content">
                         <ul class="list-main">
-                            <li><i class="ti-location-pin"></i> Store location</li>
-                            <li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
+                            {% if request.user.is_authenticated %}
                             <li><i class="ti-user"></i> <a href="#">My account</a></li>
-                            <li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
+                            <li><i class="ti-power-off"></i><a href="{% url 'account_logout' %}">Logout</a></li>
+                            {% else %}
+                            <li><i class="ti-power-off"></i><a href="{% url 'account_login' %}">Login</a></li>
+                            <li><i class="ti-user"></i><a href="{% url 'account_signup' %}">Register</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                     <!-- End Top Right -->
@@ -58,15 +61,9 @@
                 <div class="col-lg-8 col-md-7 col-12">
                     <div class="search-bar-top">
                         <div class="search-bar">
-                            <select>
-                                <option selected="selected">All Category</option>
-                                <option>watch</option>
-                                <option>mobile</option>
-                                <option>kid’s item</option>
-                            </select>
-                            <form>
-                                <input name="search" placeholder="Search Products Here....." type="search">
-                                <button class="btnn"><i class="ti-search"></i></button>
+                            <form method="GET" action="{% url 'core:shop' %}">
+                                {{data_search.form}}
+                                <button class="btnn" type="submit"><i class="ti-search"></i></button>
                             </form>
                         </div>
                     </div>
