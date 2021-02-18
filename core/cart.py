@@ -73,7 +73,7 @@ class Cart:
             cart=self.cart, product=product).first()
         if item:
             item.quantity = item.quantity + int(quantity)
-            item.unit_price = product.price
+            item.unit_price = product.get_price()
             item.save()
         else:
             raise ItemDoesNotExist
@@ -86,7 +86,7 @@ class Cart:
                 item.delete()
             else:
                 item.quantity = item.quantity - int(quantity)
-                item.unit_price = product.price
+                item.unit_price = product.get_price()
                 item.save()
         else:
             raise ItemDoesNotExist

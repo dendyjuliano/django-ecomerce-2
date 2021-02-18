@@ -22,6 +22,7 @@ class IndexView(ListView):
         context.update({
             'category_list': Category.objects.all(),
             'data_search': data_search,
+            'cart': cart,
         })
         return context
 
@@ -41,6 +42,7 @@ class ShopView(ListView):
             'category_list': Category.objects.all(),
             'data_filter': data_filter,
             'data_search': data_search,
+            'cart': cart,
         })
         return context
 
@@ -65,21 +67,28 @@ class ProductDetailView(DetailView):
             'category_list': Category.objects.all(),
             'data_filter': data_filter,
             'data_search': data_search,
+            'cart': cart,
         })
         return context
 
-# add cart
+class CheckoutView(View):
+    def get(self, *args, **kwargs):
+        return render(self.request, "home/checkout.html")
 
-
+# Cart Proces
 @login_required
 def cart(request):
     cart = Cart(request)
     product = Product.objects.all()
     data_search = SearchProduct(request.GET, queryset=product)
+    total = 0
+    for item in cart:
+        total += item.total_price
 
     context = {
         'cart': cart,
-        'data_search': data_search
+        'data_search': data_search,
+        'total': total
     }
     return render(request, 'home/cart.html', context)
 
@@ -89,7 +98,7 @@ def cart_add(request, id):
     cart = Cart(request)
     product = Product.objects.get(id=id)
 
-    cart.add(product, Decimal(product.get_price))
+    cart.add(product, product.get_price())
     return redirect('core:cart')
 
 
