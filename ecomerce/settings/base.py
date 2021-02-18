@@ -27,6 +27,8 @@ INSTALLED_APPS = [
 
     'django_filters',
 
+    'cart',
+
     'core',
 ]
 
@@ -53,6 +55,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processor.cart_total_amount',
             ],
         },
     },
@@ -111,3 +114,6 @@ _FORMATTER.add_formatting_definition(
 
 CURRENCIES = ('USD', 'IDN')
 CURRENCY_CHOICES = [('USD', 'USD $'), ('IDN', 'IDN Rp')]
+
+#FOR CART
+CART_SESSION_ID = 'cart'

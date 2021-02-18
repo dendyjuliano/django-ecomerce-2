@@ -4,7 +4,7 @@ from django import forms
 
 
 class OrderProduct(django_filters.FilterSet):
-    title = django_filters.CharFilter(
+    name = django_filters.CharFilter(
         label='',
         lookup_expr='icontains', widget=forms.TextInput(
             attrs={
@@ -26,11 +26,11 @@ class OrderProduct(django_filters.FilterSet):
 
     class Meta:
         model = Product
-        fields = ['title']
+        fields = ['name']
 
 
 class SearchProduct(django_filters.FilterSet):
-    title = django_filters.CharFilter(label='', lookup_expr='icontains', widget=forms.TextInput(
+    name = django_filters.CharFilter(label='', lookup_expr='icontains', widget=forms.TextInput(
         attrs={
             'class': 'form-control',
             'placeholder': 'Search Here ......',
@@ -42,4 +42,4 @@ class SearchProduct(django_filters.FilterSet):
 
     class meta:
         model = Product
-        fields = ['title']
+        fields = ['name']

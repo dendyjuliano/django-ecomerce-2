@@ -30,7 +30,7 @@
                                 <img src="https://via.placeholder.com/950x460" alt="#">
                             </div>
                             <div class="blog-detail">
-                                <h2 class="blog-title">{{ product.title }}</h2>
+                                <h2 class="blog-title">{{ product.name }}</h2>
                                 <div class="blog-meta">
                                     <span class="author">
                                         <a href="#">
@@ -149,7 +149,8 @@
                         {% endif %}
                         <h3>Rp. {{ product.get_price|intcomma }}</h3>
 
-                        <a class="btn btn-warning text-white mt-5" href="">Add to cart
+                        <a class="btn btn-warning text-white mt-5" href="{% url 'core:cart-add' product.id %}">Add to
+                            cart
                             <i class="fa fa-shopping-cart"></i>
                         </a>
                     </div>
